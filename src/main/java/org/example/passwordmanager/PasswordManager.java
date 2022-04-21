@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PasswordManager extends Application {
+    public static boolean isSignup;
     @Override
     public void start(Stage stage) throws IOException {
         if (DBConfig.OS_NAME.equals("Linux"))
@@ -21,12 +22,14 @@ public class PasswordManager extends Application {
     static void runInLinux(Stage stage1) throws IOException {
         File dbFile = new File(DBConfig.pathInLinux);
         if (!dbFile.exists()) {
+            isSignup = true;
             FXMLLoader fxmlLoader = new FXMLLoader(PasswordManager.class.getResource("signup.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 352, 110);
             stage1.setTitle("Signup");
             stage1.setScene(scene);
             stage1.show();
         } else {
+            isSignup = false;
             FXMLLoader fxmlLoader = new FXMLLoader(PasswordManager.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 352, 110);
             stage1.setTitle("Login");
@@ -38,12 +41,14 @@ public class PasswordManager extends Application {
     static void runInWindows(Stage stage2) throws IOException {
         File dbFile = new File(DBConfig.pathInWindows);
         if (!dbFile.exists()) {
+            isSignup = true;
             FXMLLoader fxmlLoader = new FXMLLoader(PasswordManager.class.getResource("signup.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 352, 110);
             stage2.setTitle("Signup");
             stage2.setScene(scene);
             stage2.show();
         } else {
+            isSignup = false;
             FXMLLoader fxmlLoader = new FXMLLoader(PasswordManager.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 352, 110);
             stage2.setTitle("Login");

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
+import org.example.passwordmanager.PasswordManager;
 
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
@@ -27,7 +28,10 @@ public class VerifyPopupController {
         PasswordDTO passwordDTO = passwordService.searchPasswordById(this.id);
         passwordService.delete(passwordDTO);
         try {
-            LoginController.getMainPageController().updateItemList();
+            if (PasswordManager.isSignup)
+                SignupController.getMainPageController().updateItemList();
+            else
+                LoginController.getMainPageController().updateItemList();
         } catch (IOException e) {
             e.printStackTrace();
         }
