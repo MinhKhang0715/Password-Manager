@@ -1,0 +1,15 @@
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/module-info.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/ItemController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/VerifyPopupController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Password/PasswordDTO.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Password/PasswordDAO.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Database/DBConfig.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/LoginController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/SignupController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/MainPageController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Crypto/Hashing.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/PasswordManager.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Password/PasswordRepo.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Password/PasswordService.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Crypto/AESCrypto.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/UpdatePassController.java
