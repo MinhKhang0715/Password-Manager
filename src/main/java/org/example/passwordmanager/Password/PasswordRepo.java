@@ -95,8 +95,6 @@ public class PasswordRepo implements PasswordDAO {
             }
             FileOutputStream fileOutputStream = dbConfig.getOutputStream();
             fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
-            System.out.println(jsonArray);
-
         } catch (IOException e) {
             System.out.println("Password repo at UPDATE method: ERROR opening file");
             e.printStackTrace();
@@ -117,7 +115,6 @@ public class PasswordRepo implements PasswordDAO {
             }
             FileOutputStream fileOutputStream = dbConfig.getOutputStream();
             fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
-            System.out.println(jsonArray);
         } catch (IOException e) {
             System.out.println("Password repo at DELETE method: ERROR opening file");
             e.printStackTrace();

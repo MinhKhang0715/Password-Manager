@@ -32,8 +32,8 @@ public class PasswordService implements PasswordDAO {
     public long datesPass(PasswordDTO passwordDTO) {
         LocalDate localDate = LocalDate.now();
         return Duration.between(
-                localDate.atStartOfDay(),
-                passwordDTO.getDateCreated().atStartOfDay()
+                passwordDTO.getDateCreated().atStartOfDay(),
+                localDate.atStartOfDay()
                 ).toDays();
     }
 

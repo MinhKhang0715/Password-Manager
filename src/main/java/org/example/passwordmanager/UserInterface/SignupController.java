@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.passwordmanager.Crypto.Hashing;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class SignupController {
     @FXML
-    private TextField txt_password;
+    private PasswordField txt_password;
     PasswordService passwordService;
     static MainPageController controller;
     public static MainPageController getMainPageController() {

@@ -24,14 +24,9 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Label>
-            <Label text="Value">
-               <HBox.margin>
-                  <Insets left="40.0" />
-               </HBox.margin>
-            </Label>
             <Label text="Date created">
                <HBox.margin>
-                  <Insets left="70.0" />
+                  <Insets left="30.0" />
                </HBox.margin>
             </Label>
             <Label text="Service name">

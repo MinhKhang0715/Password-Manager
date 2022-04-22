@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,7 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class LoginController {
-    @FXML public TextField txt_password;
+    @FXML public PasswordField txt_password;
     @FXML public Label lbl_text;
     PasswordService passwordService;
     String passwordHash;
@@ -63,7 +63,6 @@ public class LoginController {
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException {
         String password = txt_password.getText();
-        System.out.println("Hashed: " + Hashing.SHA256(password));
         if (Hashing.SHA256(password).equals(this.passwordHash)) {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(LoginController.class.getResource("/org/example/passwordmanager/main-page.fxml")));
             AnchorPane mainPage = loader.load();

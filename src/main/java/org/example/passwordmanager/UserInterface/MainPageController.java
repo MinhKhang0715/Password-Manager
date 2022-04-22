@@ -52,7 +52,8 @@ public class MainPageController {
                         ((Label) nodeIn).setText(passwordDTOS.get(i).getName());
                     if (nodeIn.getId().equals("update-rec")) {
                         long days = passwordService.datesPass(passwordDTOS.get(i));
-                        String message = days > 150 ? "Update recommend" : "Good";
+                        String message = days > 150 ? "Update!" : "Good";
+                        if (days > 150) nodeIn.setStyle("-fx-text-fill: red;");
                         ((Label) nodeIn).setText(message);
                     }
                 }
