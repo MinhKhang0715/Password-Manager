@@ -25,18 +25,25 @@ import java.util.Objects;
 public class LoginController {
     @FXML public PasswordField txt_password;
     @FXML public Label lbl_text;
-    PasswordService passwordService;
+
+    private static PasswordService passwordService;
+    private static MainPageController controller;
+
     String passwordHash;
-    static MainPageController controller;
+
     public static MainPageController getMainPageController() {
         return controller;
     }
 
-    @FXML
-    public void initialize() throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
-        passwordService = new PasswordService();
-        PasswordDTO passwordDTO = passwordService.searchPasswordById(0);
-        if (passwordDTO == null) {
+    static PasswordService getPasswordService() {
+        return passwordService;
+    }
+
+    public void onLoginButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException, NoSuchPaddingException {
+        String password = txt_password.getText();
+        passwordService = new PasswordService(Hashing.MD5(password));
+        PasswordDTO masterPassword = passwordService.searchPasswordById(0);
+        if (masterPassword == null) {
             VBox node = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/login-error.fxml")));
             for (Node nodeIn : node.getChildren()) {
                 if (nodeIn instanceof Label)
@@ -58,22 +65,20 @@ public class LoginController {
                         }
                     });
             }
-        } else this.passwordHash = passwordDTO.getValue();
-    }
-
-    public void onLoginButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException {
-        String password = txt_password.getText();
-        if (Hashing.SHA256(password).equals(this.passwordHash)) {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(LoginController.class.getResource("/org/example/passwordmanager/main-page.fxml")));
-            AnchorPane mainPage = loader.load();
-            controller = loader.getController();
-            Stage stage = new Stage();
-            stage.setTitle("Main page");
-            stage.setScene(new Scene(mainPage, mainPage.getPrefWidth(), mainPage.getPrefHeight()));
-            stage.show();
-            ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
         } else {
-            lbl_text.setText("Wrong password!");
+            this.passwordHash = masterPassword.getValue();
+            if (Hashing.SHA256(password).equals(this.passwordHash)) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(LoginController.class.getResource("/org/example/passwordmanager/main-page.fxml")));
+                AnchorPane mainPage = loader.load();
+                controller = loader.getController();
+                Stage stage = new Stage();
+                stage.setTitle("Main page");
+                stage.setScene(new Scene(mainPage, mainPage.getPrefWidth(), mainPage.getPrefHeight()));
+                stage.show();
+                ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+            } else {
+                lbl_text.setText("Wrong password!");
+            }
         }
     }
 }

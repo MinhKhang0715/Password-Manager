@@ -8,10 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
+import org.example.passwordmanager.PasswordManager;
 
-import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 
 public class UpdatePassController {
@@ -22,9 +20,13 @@ public class UpdatePassController {
     @FXML
     public TextField txt_description;
 
-    PasswordService passwordService = new PasswordService();
+    PasswordService passwordService;
 
-    public UpdatePassController() throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
+    public UpdatePassController() {
+        if (PasswordManager.isSignup)
+            passwordService = SignupController.getPasswordService();
+        else
+            passwordService = LoginController.getPasswordService();
     }
 
     public void onUpdateButtonClick(ActionEvent actionEvent) {

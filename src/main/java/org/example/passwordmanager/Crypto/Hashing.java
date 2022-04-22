@@ -12,4 +12,10 @@ public class Hashing {
         byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(encodedBytes);
     }
+
+    public static byte[] MD5(String input) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        messageDigest.update(input.getBytes(StandardCharsets.UTF_8));
+        return messageDigest.digest();
+    }
 }

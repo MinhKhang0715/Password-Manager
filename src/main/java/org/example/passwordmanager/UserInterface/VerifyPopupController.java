@@ -7,16 +7,18 @@ import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
 import org.example.passwordmanager.PasswordManager;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 public class VerifyPopupController {
     private int id;
 
-    PasswordService passwordService = new PasswordService();
+    PasswordService passwordService;
 
-    public VerifyPopupController() throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
+    public VerifyPopupController() {
+        if (PasswordManager.isSignup)
+            passwordService = SignupController.getPasswordService();
+        else
+            passwordService = LoginController.getPasswordService();
     }
 
     public void setId(int id) {

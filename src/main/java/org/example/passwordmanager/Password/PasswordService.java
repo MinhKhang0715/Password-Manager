@@ -14,19 +14,17 @@ public class PasswordService implements PasswordDAO {
     AESCrypto aesCrypto;
     PasswordRepo passwordRepo;
 
-    public PasswordService() throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
+    public PasswordService(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
         this.passwordRepo = new PasswordRepo();
-        aesCrypto = AESCrypto.getInstance();
+        aesCrypto = AESCrypto.getInstance(bytes);
     }
 
     public void copyToClipboard(PasswordDTO passwordDTO) {
         String pass = passwordDTO.getValue();
-        System.out.println(pass);
         String decrypted = aesCrypto.decrypt(pass);
         Toolkit.getDefaultToolkit()
                 .getSystemClipboard()
                 .setContents(new StringSelection(decrypted), null);
-        System.out.println(decrypted);
     }
 
     public long datesPass(PasswordDTO passwordDTO) {

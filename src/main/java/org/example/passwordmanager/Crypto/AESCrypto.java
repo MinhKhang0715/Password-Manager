@@ -15,8 +15,7 @@ import java.util.Base64;
 
 public class AESCrypto {
     private static AESCrypto aesInstance;
-    private static final byte[] bytes = {89, 21, -28, -112, -7, 29, -84, -96, 85, -67, -48, -50, -3, 121, 121, 124};
-    private static final IvParameterSpec iv = new IvParameterSpec(bytes);
+    private final IvParameterSpec iv;
     private final Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
     private static final String OS_NAME = System.getProperty("os.name");
     private static final String PATH = System.getProperty("user.home") + "/.secret/";
@@ -24,18 +23,19 @@ public class AESCrypto {
     private static final String FILE_NAME = "KEY.txt";
     private final SecretKey secretKey;
 
-    public static AESCrypto getInstance() throws NoSuchPaddingException, NoSuchAlgorithmException {
+    public static AESCrypto getInstance(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException {
         if (aesInstance == null)
-            aesInstance = new AESCrypto();
+            aesInstance = new AESCrypto(bytes);
         return aesInstance;
     }
 
-    private AESCrypto() throws NoSuchPaddingException, NoSuchAlgorithmException {
+    private AESCrypto(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException {
         if (OS_NAME.equals("Linux")) {
             File file = new File(PATH + File.pathSeparator + FILE_NAME);
             if (!file.exists())
                 createSecretKeyFile(PATH);
             this.secretKey = getKeyFromFile(PATH);
+            this.iv = new IvParameterSpec(bytes);
             System.out.println(this.secretKey);
         }
         else if (OS_NAME.contains("Windows")) {
@@ -43,9 +43,11 @@ public class AESCrypto {
             if (!file.exists())
                 createSecretKeyFile(PATH_IN_WINDOWS);
             this.secretKey = getKeyFromFile(PATH_IN_WINDOWS);
+            this.iv = new IvParameterSpec(bytes);
         }
         else {
             this.secretKey = null;
+            this.iv = null;
         }
     }
 

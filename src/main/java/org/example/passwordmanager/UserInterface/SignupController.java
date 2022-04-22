@@ -19,12 +19,17 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class SignupController {
-    @FXML
-    private PasswordField txt_password;
-    PasswordService passwordService;
-    static MainPageController controller;
+    @FXML private PasswordField txt_password;
+
+    private static PasswordService passwordService;
+    private static MainPageController controller;
+
     public static MainPageController getMainPageController() {
         return controller;
+    }
+
+    static PasswordService getPasswordService() {
+        return passwordService;
     }
 
     @FXML
@@ -32,7 +37,7 @@ public class SignupController {
         String password = txt_password.getText();
         System.out.println(password);
         try {
-            passwordService = new PasswordService();
+            passwordService = new PasswordService(Hashing.MD5(password));
             PasswordDTO passwordDTO = new PasswordDTO()
                     .setDateCreated(LocalDate.now())
                     .setDescription("Master password")

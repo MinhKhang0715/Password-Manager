@@ -12,10 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
+import org.example.passwordmanager.PasswordManager;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -27,9 +26,13 @@ public class MainPageController {
     @FXML public Label lbl_emptyField;
     @FXML public PasswordField txt_passField;
 
-    PasswordService passwordService = new PasswordService();
+    PasswordService passwordService;
 
-    public MainPageController() throws IOException, NoSuchPaddingException, NoSuchAlgorithmException {
+    public MainPageController() {
+        if (PasswordManager.isSignup)
+            passwordService = SignupController.getPasswordService();
+        else
+            passwordService = LoginController.getPasswordService();
     }
 
     @FXML

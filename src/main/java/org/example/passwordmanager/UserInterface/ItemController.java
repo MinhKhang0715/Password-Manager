@@ -12,10 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
+import org.example.passwordmanager.PasswordManager;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class ItemController {
@@ -31,20 +30,16 @@ public class ItemController {
     PasswordService passwordService;
 
     @FXML
-    public void initialize() throws NoSuchPaddingException, NoSuchAlgorithmException, IOException {
-        passwordService = new PasswordService();
+    public void initialize() {
+        if (PasswordManager.isSignup)
+            passwordService = SignupController.getPasswordService();
+        else
+            passwordService = LoginController.getPasswordService();
     }
 
     public void onCopyButtonClick(ActionEvent actionEvent) {
-        try {
-            passwordService = new PasswordService();
-            PasswordDTO passwordDTO = passwordService.searchPasswordById(Integer.parseInt(lbl_idPass.getText()));
-            passwordService.copyToClipboard(passwordDTO);
-        } catch (NoSuchPaddingException |
-                NoSuchAlgorithmException |
-                IOException e) {
-            e.printStackTrace();
-        }
+        PasswordDTO passwordDTO = passwordService.searchPasswordById(Integer.parseInt(lbl_idPass.getText()));
+        passwordService.copyToClipboard(passwordDTO);
     }
 
     void updateItem(int id) {
