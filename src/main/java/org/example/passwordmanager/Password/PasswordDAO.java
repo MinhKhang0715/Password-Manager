@@ -1,12 +1,16 @@
 package org.example.passwordmanager.Password;
 
+import org.example.passwordmanager.GroupPasswords.GroupDTO;
+
 import java.util.ArrayList;
 
 public interface PasswordDAO {
-    void update(PasswordDTO passwordDTO);
-    void create(PasswordDTO passwordDTO);
-    ArrayList<PasswordDTO> readAll();
-    void delete(PasswordDTO passwordDTO);
-    ArrayList<PasswordDTO> searchPasswordByName(String name);
-    PasswordDTO searchPasswordById(int id);
+    void createMasterPassword(PasswordDTO passwordDTO);
+    PasswordDTO getMasterPassword();
+    void create(PasswordDTO passwordDTO, String groupName);
+    ArrayList<PasswordDTO> readAllFromGroup(String groupName);
+    void update(PasswordDTO passwordDTO, String groupName);
+    void delete(PasswordDTO passwordDTO, String groupName);
+    PasswordDTO searchPasswordByIdFromGroup(int id, String groupName);
+    ArrayList<PasswordDTO> searchPasswordByNameFromGroup(String name,String groupName);
 }

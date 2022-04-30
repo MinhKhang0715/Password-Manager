@@ -42,7 +42,7 @@ public class LoginController {
     public void onLoginButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException, NoSuchPaddingException {
         String password = txt_password.getText();
         passwordService = new PasswordService(Hashing.MD5(password));
-        PasswordDTO masterPassword = passwordService.searchPasswordById(0);
+        PasswordDTO masterPassword = passwordService.getMasterPassword();
         if (masterPassword == null) {
             VBox node = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/login-error.fxml")));
             for (Node nodeIn : node.getChildren()) {

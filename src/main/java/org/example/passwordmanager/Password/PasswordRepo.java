@@ -19,30 +19,68 @@ public class PasswordRepo implements PasswordDAO {
     }
 
     @Override
-    public void create(PasswordDTO passwordDTO) {
+    public void createMasterPassword(PasswordDTO passwordDTO) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(DBConfig.pathInLinux));
-            JSONObject jsonObject = new JSONObject()
+            String json = "{\"passwords\":{}}";
+            JSONObject original = new JSONObject(json);
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject masterPassword = new JSONObject()
+                    .put("id", passwordDTO.getId())
+                    .put("service-name", passwordDTO.getName())
+                    .put("description", passwordDTO.getDescription())
+                    .put("value", passwordDTO.getValue())
+                    .put("date-created", passwordDTO.getDateCreated().toString());
+            passwordsObject.put("Master", masterPassword);
+            FileOutputStream fileOutputStream = dbConfig.getOutputStream();
+            fileOutputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            System.out.println("Password repo at CREATE MASTER PASSWORD method: ERROR opening file");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public PasswordDTO getMasterPassword() {
+        try {
+            FileInputStream fileInputStream = dbConfig.getInputStream();
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject masterPassword = passwordsObject.getJSONObject("Master");
+            return new PasswordDTO()
+                    .setValue(masterPassword.getString("value"));
+        } catch (IOException e) {
+            System.out.println("Password repo at CREATE MASTER PASSWORD method: ERROR opening file");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void create(PasswordDTO passwordDTO, String groupName) {
+        try {
+            FileInputStream fileInputStream = dbConfig.getInputStream();
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject passwordGroup = passwordsObject.getJSONObject(groupName);
+            JSONArray arrayOfPasswords = passwordGroup.getJSONArray("array-passwords");
+            JSONObject passwordObject = new JSONObject()
                     .put("name", passwordDTO.getName())
                     .put("value", passwordDTO.getValue())
                     .put("date-created", passwordDTO.getDateCreated().toString())
                     .put("description", passwordDTO.getDescription());
-            if (bufferedReader.readLine() == null) {
+            if (arrayOfPasswords.length() == 0) {
                 passwordDTO.setId(0);
-                jsonObject.put("id", passwordDTO.getId());
+                passwordObject.put("id", passwordDTO.getId());
+                arrayOfPasswords.put(passwordObject);
                 FileOutputStream fileOutputStream = dbConfig.getOutputStream();
-                System.out.println("PasswordRepo: DB File empty, creating new master password");
-                JSONArray jsonArray = new JSONArray().put(jsonObject);
-                fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
+                fileOutputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
             } else {
-                FileInputStream fileInputStream = dbConfig.getInputStream();
-                JSONArray jsonArray = new JSONArray(new String(fileInputStream.readAllBytes()));
-                JSONObject latestJson = jsonArray.getJSONObject(jsonArray.length() - 1);
-                int latestId = latestJson.getInt("id");
-                jsonObject.put("id", ++latestId);
-                jsonArray.put(jsonObject);
+                JSONObject latestPassword = arrayOfPasswords.getJSONObject(arrayOfPasswords.length() - 1);
+                int latestId = latestPassword.getInt("id");
+                passwordObject.put("id", ++latestId);
+                arrayOfPasswords.put(passwordObject);
                 FileOutputStream fileOutputStream = dbConfig.getOutputStream();
-                fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
+                fileOutputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
             }
         } catch (IOException e) {
             System.out.println("Password repo at CREATE method: ERROR opening file");
@@ -51,25 +89,27 @@ public class PasswordRepo implements PasswordDAO {
     }
 
     @Override
-    public ArrayList<PasswordDTO> readAll() {
+    public ArrayList<PasswordDTO> readAllFromGroup(String groupName) {
         try {
             FileInputStream fileInputStream = dbConfig.getInputStream();
-            JSONArray jsonArray = new JSONArray(new String(fileInputStream.readAllBytes()));
-            ArrayList<PasswordDTO> passwordDTOList = new ArrayList<>();
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject passwordGroup = passwordsObject.getJSONObject(groupName);
+            JSONArray arrayOfPasswords = passwordGroup.getJSONArray("array-passwords");
+            ArrayList<PasswordDTO> passwordDTOSList = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.US);
-            int arrSize = jsonArray.length();
-            for (int i = 0; i < arrSize; i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            int arraySize = arrayOfPasswords.length();
+            for (int i = 0; i < arraySize; i++) {
+                JSONObject passwordObject = arrayOfPasswords.getJSONObject(i);
                 PasswordDTO passwordDTO = new PasswordDTO()
-                        .setName(jsonObject.getString("name"))
-                        .setValue(jsonObject.getString("value"))
-                        .setDescription(jsonObject.getString("description"))
-                        .setDateCreated(LocalDate.parse(jsonObject.getString("date-created"), formatter))
-                        .setId(jsonObject.getInt("id"));
-                passwordDTOList.add(passwordDTO);
+                        .setId(passwordObject.getInt("id"))
+                        .setName(passwordObject.getString("name"))
+                        .setValue(passwordObject.getString("value"))
+                        .setDescription(passwordObject.getString("description"))
+                        .setDateCreated(LocalDate.parse(passwordObject.getString("date-created"), formatter));
+                passwordDTOSList.add(passwordDTO);
             }
-            return passwordDTOList;
-
+            return passwordDTOSList;
         } catch (IOException e) {
             System.out.println("Password repo at READ ALL method: ERROR opening file");
             e.printStackTrace();
@@ -78,15 +118,18 @@ public class PasswordRepo implements PasswordDAO {
     }
 
     @Override
-    public void update(PasswordDTO passwordDTO) {
+    public void update(PasswordDTO passwordDTO, String groupName) {
         try {
             FileInputStream fileInputStream = dbConfig.getInputStream();
-            JSONArray jsonArray = new JSONArray(new String(fileInputStream.readAllBytes()));
-            int arrSize = jsonArray.length();
-            for (int i = 1; i < arrSize; i++) {
-                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                if (jsonObject.getInt("id") == passwordDTO.getId()) {
-                    jsonObject.put("value", passwordDTO.getValue())
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject passwordGroup = passwordsObject.getJSONObject(groupName);
+            JSONArray arrayOfPasswords = passwordGroup.getJSONArray("array-passwords");
+            int arraySize = arrayOfPasswords.length();
+            for (int i = 0; i < arraySize; i++) {
+                JSONObject passwordObject = arrayOfPasswords.getJSONObject(i);
+                if (passwordObject.getInt("id") == passwordDTO.getId()) {
+                    passwordObject.put("value", passwordDTO.getValue())
                             .put("description", passwordDTO.getDescription())
                             .put("name", passwordDTO.getName())
                             .put("date-created", passwordDTO.getDateCreated().toString());
@@ -94,7 +137,7 @@ public class PasswordRepo implements PasswordDAO {
                 }
             }
             FileOutputStream fileOutputStream = dbConfig.getOutputStream();
-            fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
+            fileOutputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             System.out.println("Password repo at UPDATE method: ERROR opening file");
             e.printStackTrace();
@@ -102,40 +145,49 @@ public class PasswordRepo implements PasswordDAO {
     }
 
     @Override
-    public void delete(PasswordDTO passwordDTO) {
+    public void delete(PasswordDTO passwordDTO, String groupName) {
         try {
             FileInputStream fileInputStream = dbConfig.getInputStream();
-            JSONArray jsonArray = new JSONArray(new String(fileInputStream.readAllBytes()));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject.getInt("id") == passwordDTO.getId()) {
-                    jsonArray.remove(i);
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject passwordGroup = passwordsObject.getJSONObject(groupName);
+            JSONArray arrayOfPasswords = passwordGroup.getJSONArray("array-passwords");
+            int arraySize = arrayOfPasswords.length();
+            for (int i = 0; i < arraySize; i++) {
+                JSONObject passwordObject = arrayOfPasswords.getJSONObject(i);
+                if (passwordObject.getInt("id") == passwordDTO.getId()) {
+                    arrayOfPasswords.remove(i);
                     break;
                 }
             }
             FileOutputStream fileOutputStream = dbConfig.getOutputStream();
-            fileOutputStream.write(jsonArray.toString().getBytes(StandardCharsets.UTF_8));
+            fileOutputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             System.out.println("Password repo at DELETE method: ERROR opening file");
             e.printStackTrace();
         }
     }
 
-    public PasswordDTO searchPasswordById(int id) {
+    @Override
+    public PasswordDTO searchPasswordByIdFromGroup(int id, String groupName) {
         try {
+//            System.out.println(groupName + "\n" + id);
             FileInputStream fileInputStream = dbConfig.getInputStream();
-            JSONArray jsonArray = new JSONArray(new String(fileInputStream.readAllBytes()));
+            JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
+            JSONObject passwordsObject = original.getJSONObject("passwords");
+            JSONObject passwordGroup = passwordsObject.getJSONObject(groupName);
+            JSONArray arrayOfPasswords = passwordGroup.getJSONArray("array-passwords");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
-            int size = jsonArray.length();
+            int size = arrayOfPasswords.length();
             for (int i = 0; i < size; i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject.getInt("id") == id) {
+                JSONObject passwordObject = arrayOfPasswords.getJSONObject(i);
+                if (passwordObject.getInt("id") == id) {
                     return new PasswordDTO()
-                            .setDateCreated(LocalDate.parse(jsonObject.getString("date-created"), formatter))
+                            .setDateCreated(LocalDate.parse(passwordObject.getString("date-created"), formatter))
                             .setId(id)
-                            .setName(jsonObject.getString("name"))
-                            .setDescription(jsonObject.getString("description"))
-                            .setValue(jsonObject.getString("value"));
+                            .setName(passwordObject.getString("name"))
+                            .setDescription(passwordObject.getString("description"))
+                            .setValue(passwordObject.getString("value"));
                 }
             }
             return null;
@@ -146,7 +198,8 @@ public class PasswordRepo implements PasswordDAO {
         }
     }
 
-    public ArrayList<PasswordDTO> searchPasswordByName(String name) {
+    @Override
+    public ArrayList<PasswordDTO> searchPasswordByNameFromGroup(String name, String groupName) {
         try {
             ArrayList<PasswordDTO> result = new ArrayList<>();
             FileInputStream fileInputStream = dbConfig.getInputStream();

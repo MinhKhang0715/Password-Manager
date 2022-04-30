@@ -19,6 +19,10 @@ public class PasswordService implements PasswordDAO {
         aesCrypto = AESCrypto.getInstance(bytes);
     }
 
+    public AESCrypto getAesCrypto() {
+        return aesCrypto;
+    }
+
     public void copyToClipboard(PasswordDTO passwordDTO) {
         String pass = passwordDTO.getValue();
         String decrypted = aesCrypto.decrypt(pass);
@@ -36,37 +40,42 @@ public class PasswordService implements PasswordDAO {
     }
 
     @Override
-    public void create(PasswordDTO passwordDTO) {
-        if (!passwordDTO.getName().equals("master")) {
-            String plainText = passwordDTO.getValue();
-            String cipher = aesCrypto.encrypt(plainText);
-            passwordDTO.setValue(cipher);
-        }
-        passwordRepo.create(passwordDTO);
+    public void createMasterPassword(PasswordDTO passwordDTO) {
+        passwordRepo.createMasterPassword(passwordDTO);
     }
 
     @Override
-    public ArrayList<PasswordDTO> readAll() {
-        return this.passwordRepo.readAll();
+    public PasswordDTO getMasterPassword() {
+        return passwordRepo.getMasterPassword();
     }
 
     @Override
-    public void update(PasswordDTO passwordDTO) {
-        passwordRepo.update(passwordDTO.setValue(aesCrypto.encrypt(passwordDTO.getValue())));
+    public void create(PasswordDTO passwordDTO, String groupName) {
+        passwordRepo.create(passwordDTO.setValue(aesCrypto.encrypt(passwordDTO.getValue())), groupName);
     }
 
     @Override
-    public void delete(PasswordDTO passwordDTO) {
-        this.passwordRepo.delete(passwordDTO);
+    public ArrayList<PasswordDTO> readAllFromGroup(String groupName) {
+        return this.passwordRepo.readAllFromGroup(groupName);
     }
 
     @Override
-    public ArrayList<PasswordDTO> searchPasswordByName(String name) {
-        return passwordRepo.searchPasswordByName(name);
+    public void update(PasswordDTO passwordDTO, String groupName) {
+        passwordRepo.update(passwordDTO.setValue(aesCrypto.encrypt(passwordDTO.getValue())), groupName);
     }
 
     @Override
-    public PasswordDTO searchPasswordById(int id) {
-        return passwordRepo.searchPasswordById(id);
+    public void delete(PasswordDTO passwordDTO, String groupName) {
+        this.passwordRepo.delete(passwordDTO, groupName);
+    }
+
+    @Override
+    public ArrayList<PasswordDTO> searchPasswordByNameFromGroup(String name, String groupName) {
+        return passwordRepo.searchPasswordByNameFromGroup(name, groupName);
+    }
+
+    @Override
+    public PasswordDTO searchPasswordByIdFromGroup(int id, String groupName) {
+        return passwordRepo.searchPasswordByIdFromGroup(id, groupName);
     }
 }

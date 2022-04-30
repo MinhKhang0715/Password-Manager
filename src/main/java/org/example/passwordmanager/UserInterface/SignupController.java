@@ -35,7 +35,7 @@ public class SignupController {
     @FXML
     protected void onSignupButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, NoSuchPaddingException {
         String password = txt_password.getText();
-        System.out.println(password);
+//        System.out.println(password);
         try {
             passwordService = new PasswordService(Hashing.MD5(password));
             PasswordDTO passwordDTO = new PasswordDTO()
@@ -43,8 +43,8 @@ public class SignupController {
                     .setDescription("Master password")
                     .setName("master")
                     .setValue(Hashing.SHA256(password));
-            passwordService.create(passwordDTO);
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(LoginController.class.getResource("/org/example/passwordmanager/main-page.fxml")));
+            passwordService.createMasterPassword(passwordDTO);
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/main-page.fxml")));
             AnchorPane mainPage = loader.load();
             controller = loader.getController();
             Stage stage = new Stage();
