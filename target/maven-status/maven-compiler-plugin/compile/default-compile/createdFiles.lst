@@ -7,6 +7,7 @@ org/example/passwordmanager/UserInterface/SignupController.class
 module-info.class
 org/example/passwordmanager/Password/PasswordDTO.class
 org/example/passwordmanager/Password/PasswordDAO.class
+org/example/passwordmanager/UserInterface/PopupConfirmGroupPassword.class
 org/example/passwordmanager/GroupPasswords/GroupDTO.class
 org/example/passwordmanager/Crypto/Hashing.class
 org/example/passwordmanager/GroupPasswords/GroupRepo.class

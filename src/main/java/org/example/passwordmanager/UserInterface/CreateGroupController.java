@@ -26,8 +26,17 @@ public class CreateGroupController {
 
     @FXML
     public void initialize() {
-        if (chk_passwordEnabled.isSelected())
-            txt_groupPassword.setEditable(true);
+        chk_passwordEnabled.setOnAction(actionEvent -> {
+            if (chk_passwordEnabled.isSelected()) {
+                chk_passwordEnabled.setSelected(true);
+                txt_groupPassword.setEditable(true);
+            }
+            else {
+                chk_passwordEnabled.setSelected(false);
+                txt_groupPassword.clear();
+                txt_groupPassword.setEditable(false);
+            }
+        });
     }
 
     @FXML
@@ -43,7 +52,7 @@ public class CreateGroupController {
                 else {
                     groupDTO = groupDTO.setGroupPassword(Hashing.SHA256(txt_groupPassword.getText()));
                     groupService.createGroup(groupDTO);
-                    mainPageController.populateGroupList();
+                    mainPageController.updateGroupList();
                     (((Node) actionEvent.getSource())).getScene().getWindow().hide();
                 }
             }

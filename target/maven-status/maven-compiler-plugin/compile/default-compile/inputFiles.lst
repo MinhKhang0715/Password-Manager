@@ -2,6 +2,7 @@
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/GroupPasswords/GroupDAO.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/PasswordItemController.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/PopupDeletePassword.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/PopupConfirmGroupPassword.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/GroupPasswords/GroupRepo.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Password/PasswordDTO.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/CreatePasswordController.java
@@ -20,3 +21,4 @@
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/GroupPasswords/GroupService.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/Crypto/AESCrypto.java
 /home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/UpdatePassController.java
+/home/minhkhang/Documents/2021-2022-HK2/SysSecurity/assignment/Password-Manager/src/main/java/org/example/passwordmanager/UserInterface/UpdateGroupController.java

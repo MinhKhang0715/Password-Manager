@@ -136,13 +136,27 @@ public class MainPageController {
             String groupName = groupDTOArrayList.get(i).getGroupName();
             nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/group-item.fxml")));
             nodes[i].setText(groupName);
+            int finalI = i;
             nodes[i].setOnAction(actionEvent -> {
                 try {
-                    lbl_groupName.setText(groupName);
-                    updateItemList(groupName);
-                    btn_createPassword.setDisable(false);
-                    btn_deleteGroup.setDisable(false);
-                    btn_updateGroup.setDisable(false);
+                    if (groupDTOArrayList.get(finalI).getGroupPassword().equals("")) {
+                        lbl_groupName.setText(groupName);
+                        updateItemList(groupName);
+                        btn_createPassword.setDisable(false);
+                        btn_deleteGroup.setDisable(false);
+                        btn_updateGroup.setDisable(false);
+                    }
+                    else {
+
+                        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/popup-confirm-group-password.fxml")));
+                        AnchorPane root = fxmlLoader.load();
+                        PopupConfirmGroupPassword controller = fxmlLoader.getController();
+                        controller.setGroupName(groupName);
+                        Stage stage = new Stage();
+                        stage.setTitle("Confirm password for group " + groupName);
+                        stage.setScene(new Scene(root, root.getPrefWidth(), root.getPrefHeight()));
+                        stage.show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

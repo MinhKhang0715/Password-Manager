@@ -38,7 +38,7 @@
                   <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
                </children>
             </HBox>
-            <Label fx:id="lbl_empty" text="Label" />
+            <Label fx:id="lbl_empty" />
          </children>
       </VBox>
    </children>

@@ -68,19 +68,27 @@ public class GroupRepo implements GroupDAO {
             FileInputStream fileInputStream = dbConfig.getInputStream();
             JSONObject original = new JSONObject(new String(fileInputStream.readAllBytes()));
             JSONObject passwordsObject = original.getJSONObject("passwords");
-            Iterator<String> keys = passwordsObject.keys();
-            while (keys.hasNext()) {
-                String key = keys.next();
-                if (key.equals(oldGroup.getGroupName())) {
-                    passwordsObject.put(newGroup.getGroupName(), passwordsObject.getJSONObject(key));
-                    JSONObject jsonObject = passwordsObject.getJSONObject(newGroup.getGroupName());
-                    jsonObject.put("group-pass", newGroup.getGroupPassword());
-                    passwordsObject.remove(key);
-                    break;
-                }
+            if (oldGroup.getGroupName().equals(newGroup.getGroupName())) {
+                JSONObject password = passwordsObject.getJSONObject(oldGroup.getGroupName());
+                password.put("group-pass", newGroup.getGroupPassword());
+                FileOutputStream outputStream = dbConfig.getOutputStream();
+                outputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
             }
-            FileOutputStream outputStream = dbConfig.getOutputStream();
-            outputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
+            else {
+                Iterator<String> keys = passwordsObject.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    if (key.equals(oldGroup.getGroupName())) {
+                        passwordsObject.put(newGroup.getGroupName(), passwordsObject.getJSONObject(key));
+                        JSONObject jsonObject = passwordsObject.getJSONObject(newGroup.getGroupName());
+                        jsonObject.put("group-pass", newGroup.getGroupPassword());
+                        passwordsObject.remove(key);
+                        break;
+                    }
+                }
+                FileOutputStream outputStream = dbConfig.getOutputStream();
+                outputStream.write(original.toString().getBytes(StandardCharsets.UTF_8));
+            }
         } catch (IOException e) {
             System.out.println("Group repo at UPDATE GROUP method ERROR");
             e.printStackTrace();
