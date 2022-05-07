@@ -136,10 +136,10 @@ public class MainPageController {
             String groupName = groupDTOArrayList.get(i).getGroupName();
             nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/group-item.fxml")));
             nodes[i].setText(groupName);
-            int finalI = i;
+            int current = i;
             nodes[i].setOnAction(actionEvent -> {
                 try {
-                    if (groupDTOArrayList.get(finalI).getGroupPassword().equals("")) {
+                    if (groupDTOArrayList.get(current).getGroupPassword().equals("")) {
                         lbl_groupName.setText(groupName);
                         updateItemList(groupName);
                         btn_createPassword.setDisable(false);
@@ -147,7 +147,6 @@ public class MainPageController {
                         btn_updateGroup.setDisable(false);
                     }
                     else {
-
                         FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/popup-confirm-group-password.fxml")));
                         AnchorPane root = fxmlLoader.load();
                         PopupConfirmGroupPassword controller = fxmlLoader.getController();

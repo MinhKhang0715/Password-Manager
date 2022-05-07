@@ -133,4 +133,9 @@ public class GroupRepo implements GroupDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean isGroupExist(String groupName) {
+        return searchGroupByName(groupName) != null;
+    }
 }

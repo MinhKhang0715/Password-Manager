@@ -8,4 +8,5 @@ public interface GroupDAO {
     void updateGroup(GroupDTO oldGroup, GroupDTO newGroup);
     void deleteGroup(GroupDTO groupDTO);
     GroupDTO searchGroupByName(String name);
+    boolean isGroupExist(String groupName);
 }

@@ -34,4 +34,9 @@ public class GroupService implements GroupDAO{
     public GroupDTO searchGroupByName(String name) {
         return groupRepo.searchGroupByName(name);
     }
+
+    @Override
+    public boolean isGroupExist(String groupName) {
+        return groupRepo.isGroupExist(groupName);
+    }
 }

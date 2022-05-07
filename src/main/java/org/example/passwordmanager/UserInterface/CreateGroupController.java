@@ -45,22 +45,26 @@ public class CreateGroupController {
             lbl_empty.setText("Group name cannot left empty");
         }
         else {
-            GroupDTO groupDTO = new GroupDTO().setGroupName(txt_groupName.getText());
-            if (chk_passwordEnabled.isSelected()) {
-                if (txt_groupPassword.getText().equals(""))
-                    lbl_empty.setText("Please enter password of the group");
+            if (groupService.isGroupExist(txt_groupName.getText()))
+                lbl_empty.setText("Group already existed!");
+            else {
+                GroupDTO groupDTO = new GroupDTO().setGroupName(txt_groupName.getText());
+                if (chk_passwordEnabled.isSelected()) {
+                    if (txt_groupPassword.getText().equals(""))
+                        lbl_empty.setText("Please enter password of the group");
+                    else {
+                        groupDTO = groupDTO.setGroupPassword(Hashing.SHA256(txt_groupPassword.getText()));
+                        groupService.createGroup(groupDTO);
+                        mainPageController.updateGroupList();
+                        (((Node) actionEvent.getSource())).getScene().getWindow().hide();
+                    }
+                }
                 else {
-                    groupDTO = groupDTO.setGroupPassword(Hashing.SHA256(txt_groupPassword.getText()));
+                    groupDTO = groupDTO.setGroupPassword("");
                     groupService.createGroup(groupDTO);
                     mainPageController.updateGroupList();
                     (((Node) actionEvent.getSource())).getScene().getWindow().hide();
                 }
-            }
-            else {
-                groupDTO = groupDTO.setGroupPassword("");
-                groupService.createGroup(groupDTO);
-                mainPageController.updateGroupList();
-                (((Node) actionEvent.getSource())).getScene().getWindow().hide();
             }
         }
     }

@@ -25,10 +25,21 @@ public class PopupDeleteGroup {
     public void onDeleteButtonClick(ActionEvent actionEvent) throws IOException {
         GroupDTO groupDTO = groupService.searchGroupByName(groupName);
         groupService.deleteGroup(groupDTO);
-        if (PasswordManager.isSignup)
+        if (PasswordManager.isSignup) {
             SignupController.getMainPageController().updateGroupList();
-        else
+            SignupController.getMainPageController().lbl_groupName.setText("No group selected");
+            SignupController.getMainPageController().btn_deleteGroup.setDisable(true);
+            SignupController.getMainPageController().btn_updateGroup.setDisable(true);
+            SignupController.getMainPageController().btn_createPassword.setDisable(true);
+
+        }
+        else {
             LoginController.getMainPageController().updateGroupList();
+            LoginController.getMainPageController().lbl_groupName.setText("No group selected");
+            LoginController.getMainPageController().btn_deleteGroup.setDisable(true);
+            LoginController.getMainPageController().btn_updateGroup.setDisable(true);
+            LoginController.getMainPageController().btn_createPassword.setDisable(true);
+        }
         (((Node) actionEvent.getSource())).getScene().getWindow().hide();
     }
 

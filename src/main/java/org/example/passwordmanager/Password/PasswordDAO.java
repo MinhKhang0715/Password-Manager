@@ -1,7 +1,5 @@
 package org.example.passwordmanager.Password;
 
-import org.example.passwordmanager.GroupPasswords.GroupDTO;
-
 import java.util.ArrayList;
 
 public interface PasswordDAO {
