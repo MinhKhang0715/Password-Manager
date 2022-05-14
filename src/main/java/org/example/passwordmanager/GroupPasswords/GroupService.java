@@ -39,4 +39,9 @@ public class GroupService implements GroupDAO{
     public boolean isGroupExist(String groupName) {
         return groupRepo.isGroupExist(groupName);
     }
+
+    @Override
+    public void createNoGroup() {
+        groupRepo.createNoGroup();
+    }
 }

@@ -9,4 +9,5 @@ public interface GroupDAO {
     void deleteGroup(GroupDTO groupDTO);
     GroupDTO searchGroupByName(String name);
     boolean isGroupExist(String groupName);
+    void createNoGroup();
 }

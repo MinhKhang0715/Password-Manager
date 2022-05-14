@@ -10,70 +10,58 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="1158.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.MainPageController">
-   <children>
-      <AnchorPane layoutX="171.0" layoutY="163.0" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <ScrollPane layoutY="36.0" prefHeight="267.0" prefWidth="967.0">
-               <content>
-                  <VBox fx:id="pnlPassItems" prefHeight="265.0" prefWidth="965.0" />
-               </content>
-            </ScrollPane>
-            <HBox prefHeight="30.0" prefWidth="870.0">
-               <children>
-                  <Label text="Id">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="Date created">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="Service name">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="Description">
-                     <HBox.margin>
-                        <Insets left="60.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label prefHeight="18.0" prefWidth="158.0" text="Recommend update">
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </HBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="466.0" prefWidth="171.0">
-         <children>
-            <Label layoutX="46.0" layoutY="36.0" text="Groups">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <ScrollPane layoutY="79.0" prefHeight="381.0" prefWidth="171.0">
-               <content>
-                  <VBox fx:id="pnlGroupItems" prefHeight="378.0" prefWidth="168.0" />
-               </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-      <Label fx:id="lbl_groupName" layoutX="220.0" layoutY="26.0" prefHeight="125.0" prefWidth="352.0" text="Group name">
+   <AnchorPane layoutX="171.0" layoutY="163.0" prefHeight="200.0" prefWidth="200.0">
+      <ScrollPane layoutY="36.0" prefHeight="267.0" prefWidth="967.0">
+         <VBox fx:id="pnlPassItems" prefHeight="265.0" prefWidth="965.0" />
+      </ScrollPane>
+      <HBox prefHeight="30.0" prefWidth="870.0">
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+         <Label text="Id">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+         </Label>
+         <Label text="Date created">
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
+         </Label>
+         <Label text="Service name">
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
+         </Label>
+         <Label text="Description">
+            <HBox.margin>
+               <Insets left="60.0" />
+            </HBox.margin>
+         </Label>
+         <Label prefHeight="18.0" prefWidth="158.0" text="Recommend update">
+            <HBox.margin>
+               <Insets left="100.0" />
+            </HBox.margin>
+         </Label>
+      </HBox>
+   </AnchorPane>
+   <AnchorPane prefHeight="466.0" prefWidth="171.0">
+      <Label layoutX="46.0" layoutY="36.0" text="Groups">
          <font>
-            <Font size="34.0" />
+            <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="65.0" layoutY="478.0" mnemonicParsing="false" onAction="#onCreateGroupButtonClick" text="Create Group" />
-      <Button fx:id="btn_createPassword" disable="true" layoutX="1010.0" layoutY="478.0" mnemonicParsing="false" onAction="#onCreatePasswordButtonClick" text="Create password" />
-      <Button fx:id="btn_updateGroup" disable="true" layoutX="885.0" layoutY="89.0" mnemonicParsing="false" onAction="#onUpdateGroupButtonClick" text="Update Group" />
-      <Button fx:id="btn_deleteGroup" disable="true" layoutX="1010.0" layoutY="89.0" mnemonicParsing="false" onAction="#onDeleteGroupButtonClick" text="Delete Group" />
-   </children>
+      <ScrollPane layoutY="79.0" prefHeight="381.0" prefWidth="171.0">
+         <VBox fx:id="pnlGroupItems" prefHeight="378.0" prefWidth="168.0" />
+      </ScrollPane>
+   </AnchorPane>
+   <Label fx:id="lbl_groupName" layoutX="220.0" layoutY="26.0" prefHeight="125.0" prefWidth="352.0" text="No group selected">
+      <font>
+         <Font size="34.0" />
+      </font>
+   </Label>
+   <Button layoutX="65.0" layoutY="478.0" mnemonicParsing="false" onAction="#onCreateGroupButtonClick" text="Create Group" />
+   <Button fx:id="btn_createPassword" disable="true" layoutX="1010.0" layoutY="478.0" mnemonicParsing="false" onAction="#onCreatePasswordButtonClick" text="Create password" />
+   <Button fx:id="btn_updateGroup" disable="true" layoutX="885.0" layoutY="89.0" mnemonicParsing="false" onAction="#onUpdateGroupButtonClick" text="Update Group" />
+   <Button fx:id="btn_deleteGroup" disable="true" layoutX="1010.0" layoutY="89.0" mnemonicParsing="false" onAction="#onDeleteGroupButtonClick" text="Delete Group" />
 </AnchorPane>

@@ -37,9 +37,8 @@ public class PopupConfirmGroupPassword {
     @FXML
     public void onConfirmButtonClick(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException {
         GroupDTO groupDTO = groupService.searchGroupByName(groupName);
-        if (!Hashing.SHA256(txt_password.getText()).equals(groupDTO.getGroupPassword())) {
+        if (!Hashing.SHA256(txt_password.getText()).equals(groupDTO.getGroupPassword()))
             lbl_wrongPassword.setText("Wrong password!");
-        }
         else {
             controller.lbl_groupName.setText(groupName);
             controller.updateItemList(groupName);

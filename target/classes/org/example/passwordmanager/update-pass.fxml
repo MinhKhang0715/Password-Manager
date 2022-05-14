@@ -9,68 +9,55 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="170.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.UpdatePassController">
-   <children>
-      <VBox layoutX="51.0" layoutY="10.0" prefHeight="106.0" prefWidth="276.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="25.0" prefWidth="276.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="20.0" prefWidth="276.0">
-                     <children>
-                        <Label text="Service Name" />
-                        <TextField fx:id="txt_serviceName">
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="1.0" prefWidth="276.0">
-                     <children>
-                        <Label prefHeight="16.0" prefWidth="72.0" text="Password" />
-                        <PasswordField fx:id="txt_password">
-                           <HBox.margin>
-                              <Insets left="35.0" />
-                           </HBox.margin>
-                        </PasswordField>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="0.0" prefWidth="276.0">
-                     <children>
-                        <Label text="Description" />
-                        <TextField fx:id="txt_description">
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Label fx:id="txt_empty" />
-               </children>
-            </VBox>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="276.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Update" />
-                  <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel">
-                     <HBox.margin>
-                        <Insets left="145.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
+<AnchorPane prefHeight="170.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.passwordmanager.UserInterface.UpdatePassController">
+   <VBox layoutX="51.0" layoutY="10.0" prefHeight="106.0" prefWidth="276.0">
+      <VBox alignment="CENTER" prefHeight="25.0" prefWidth="276.0">
+         <HBox alignment="CENTER" prefHeight="20.0" prefWidth="276.0">
+            <VBox.margin>
+               <Insets bottom="10.0"/>
+            </VBox.margin>
+            <Label text="Service Name"/>
+            <TextField fx:id="txt_serviceName">
+               <HBox.margin>
+                  <Insets left="15.0"/>
+               </HBox.margin>
+            </TextField>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="1.0" prefWidth="276.0">
+            <VBox.margin>
+               <Insets bottom="10.0"/>
+            </VBox.margin>
+            <Label prefHeight="16.0" prefWidth="72.0" text="Password"/>
+            <PasswordField fx:id="txt_password">
+               <HBox.margin>
+                  <Insets left="35.0"/>
+               </HBox.margin>
+            </PasswordField>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="0.0" prefWidth="276.0">
+            <VBox.margin>
+               <Insets bottom="10.0"/>
+            </VBox.margin>
+            <Label text="Description"/>
+            <TextField fx:id="txt_description">
+               <HBox.margin>
+                  <Insets left="30.0"/>
+               </HBox.margin>
+            </TextField>
+         </HBox>
+         <Label fx:id="txt_empty"/>
       </VBox>
-   </children>
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="276.0">
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+         <Button mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Update"/>
+         <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel">
+            <HBox.margin>
+               <Insets left="145.0"/>
+            </HBox.margin>
+         </Button>
+      </HBox>
+   </VBox>
 </AnchorPane>

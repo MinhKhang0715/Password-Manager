@@ -7,17 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.PasswordField?>
-<VBox alignment="CENTER" prefHeight="107.0" prefWidth="320.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.LoginController">
+<VBox alignment="CENTER" prefHeight="107.0" prefWidth="320.0" spacing="10.0" xmlns="http://javafx.com/javafx/18"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.LoginController">
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
    </padding>
-   <children>
-      <AnchorPane prefHeight="110.0" prefWidth="352.0">
-         <children>
-            <Label fx:id="lbl_text" layoutY="29.0" text="Enter master password" />
-            <Button layoutX="143.0" layoutY="72.0" onAction="#onLoginButtonClick" text="Login" />
-            <PasswordField fx:id="txt_password" layoutX="176.0" layoutY="25.0" promptText="Password here" />
-         </children>
-      </AnchorPane>
-   </children>
+   <AnchorPane prefHeight="110.0" prefWidth="352.0">
+      <Label fx:id="lbl_text" layoutY="29.0" text="Enter master password"/>
+      <Button layoutX="143.0" layoutY="72.0" onAction="#onLoginButtonClick" text="Login"/>
+      <PasswordField fx:id="txt_password" layoutX="176.0" layoutY="25.0" promptText="Password here"/>
+   </AnchorPane>
 </VBox>

@@ -6,16 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="167.0" prefWidth="358.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.SignupController">
+<VBox alignment="CENTER" prefHeight="167.0" prefWidth="358.0" spacing="10.0" xmlns="http://javafx.com/javafx/18"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.UserInterface.SignupController">
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
    </padding>
-   <children>
-      <AnchorPane prefHeight="233.0" prefWidth="421.0">
-         <children>
-            <Label id="lbl_errortype" layoutX="94.0" layoutY="33.0" text="Enter master password" />
-            <Button id="btn_error" layoutX="151.0" layoutY="95.0" text="Ok" />
-         </children>
-      </AnchorPane>
-   </children>
+   <AnchorPane prefHeight="233.0" prefWidth="421.0">
+      <Label id="lbl_errortype" layoutX="94.0" layoutY="33.0" text="Enter master password"/>
+      <Button id="btn_error" layoutX="151.0" layoutY="95.0" text="Ok"/>
+   </AnchorPane>
 </VBox>

@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.passwordmanager.Crypto.Hashing;
+import org.example.passwordmanager.GroupPasswords.GroupService;
 import org.example.passwordmanager.Password.PasswordDTO;
 import org.example.passwordmanager.Password.PasswordService;
 
@@ -44,6 +45,8 @@ public class SignupController {
                     .setName("master")
                     .setValue(Hashing.SHA256(password));
             passwordService.createMasterPassword(passwordDTO);
+            GroupService groupService = new GroupService();
+            groupService.createNoGroup();
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/main-page.fxml")));
             AnchorPane mainPage = loader.load();
             controller = loader.getController();

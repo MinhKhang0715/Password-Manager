@@ -138,4 +138,10 @@ public class GroupRepo implements GroupDAO {
     public boolean isGroupExist(String groupName) {
         return searchGroupByName(groupName) != null;
     }
+
+    @Override
+    public void createNoGroup() {
+        GroupDTO groupDTO = new GroupDTO().setGroupName("No group").setGroupPassword("");
+        this.createGroup(groupDTO);
+    }
 }
